@@ -1,6 +1,4 @@
-plugins {
-    id 'checkstyle'
-}
+
 
 test {
     // Pass on downloader type to tests for different CI jobs. See DownloaderFactory.java and ci.yml
@@ -8,19 +6,10 @@ test {
         systemProperty('downloader', System.getProperty('downloader'))
     }
     useJUnitPlatform()
-    dependsOn checkstyleMain // run checkstyle when testing
+//    dependsOn checkstyleMain // run checkstyle when testing
 }
 
-checkstyle {
-    getConfigDirectory().set(rootProject.file("checkstyle"))
-    ignoreFailures false
-    showViolations true
-    toolVersion checkstyleVersion
-}
 
-checkstyleTest {
-    enabled false // do not checkstyle test files
-}
 
 dependencies {
     implementation project(':timeago-parser')
@@ -31,7 +20,7 @@ dependencies {
     implementation "com.github.spotbugs:spotbugs-annotations:$spotbugsVersion"
     implementation 'org.nibor.autolink:autolink:0.10.0'
 
-    checkstyle "com.puppycrawl.tools:checkstyle:$checkstyleVersion"
+//    checkstyle "com.puppycrawl.tools:checkstyle:$checkstyleVersion"
 
     testImplementation platform("org.junit:junit-bom:$junitVersion")
     testImplementation 'org.junit.jupiter:junit-jupiter-api'

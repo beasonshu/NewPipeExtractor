@@ -36,6 +36,7 @@ import org.schabi.newpipe.extractor.stream.StreamInfoItem;
 import org.schabi.newpipe.extractor.stream.StreamInfoItemsCollector;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 import javax.annotation.Nonnull;
 
@@ -60,11 +61,11 @@ public class YoutubeTrendingExtractor extends KioskExtractor<StreamInfoItem> {
         // @formatter:off
         final byte[] body = JsonWriter.string(prepareDesktopJsonBuilder(getExtractorLocalization(),
                 getExtractorContentCountry())
-                .value("browseId", "FEtrending")
+                .value("browseId", "FEwhat_to_watch")
                 .done())
-                .getBytes(UTF_8);
+                .getBytes(StandardCharsets.UTF_8);
         // @formatter:on
-
+        String result = new String(body);
         initialData = getJsonPostResponse("browse", body, getExtractorLocalization());
     }
 
@@ -97,20 +98,28 @@ public class YoutubeTrendingExtractor extends KioskExtractor<StreamInfoItem> {
         final TimeAgoParser timeAgoParser = getTimeAgoParser();
         final JsonArray itemSectionRenderers = initialData.getObject("contents")
                 .getObject("twoColumnBrowseResultsRenderer").getArray("tabs").getObject(0)
-                .getObject("tabRenderer").getObject("content").getObject("sectionListRenderer")
+                .getObject("tabRenderer").getObject("content").getObject("richGridRenderer")
                 .getArray("contents");
 
         for (final Object itemSectionRenderer : itemSectionRenderers) {
-            final JsonObject expandedShelfContentsRenderer = ((JsonObject) itemSectionRenderer)
-                    .getObject("itemSectionRenderer").getArray("contents").getObject(0)
-                    .getObject("shelfRenderer").getObject("content")
-                    .getObject("expandedShelfContentsRenderer");
-            for (final Object ul : expandedShelfContentsRenderer.getArray("items")) {
-                final JsonObject videoInfo = ((JsonObject) ul).getObject("videoRenderer");
-                collector.commit(new YoutubeStreamInfoItemExtractor(videoInfo, timeAgoParser));
+            final JsonObject item = ((JsonObject) itemSectionRenderer);
+            if (item.containsKey("richItemRenderer")){
+                final JsonObject videoRenderer = item.getObject("richItemRenderer")
+                        .getObject("content")
+                        .getObject("videoRenderer");
+                collector.commit(new YoutubeStreamInfoItemExtractor(videoRenderer, timeAgoParser));
+            }else if (item.containsKey("richSectionRenderer")){
+                final JsonArray richShelfRendererContents = item.getObject("richSectionRenderer")
+                        .getObject("content")
+                        .getObject("richShelfRenderer").getArray("contents");
+                for (Object child:richShelfRendererContents) {
+                    final JsonObject videoRenderer = ((JsonObject) child).getObject("richItemRenderer")
+                            .getObject("content")
+                            .getObject("videoRenderer");
+                    collector.commit(new YoutubeStreamInfoItemExtractor(videoRenderer, timeAgoParser));
+                }
             }
         }
-
         return new InfoItemsPage<>(collector, null);
     }
 }
