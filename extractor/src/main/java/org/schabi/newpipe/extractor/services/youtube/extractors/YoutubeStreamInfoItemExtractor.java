@@ -224,7 +224,7 @@ public class YoutubeStreamInfoItemExtractor implements StreamInfoItemExtractor {
         final String publishedTimeText
                 = getTextFromObject(videoInfo.getObject("publishedTimeText"));
         if (publishedTimeText != null && !publishedTimeText.isEmpty()) {
-            return publishedTimeText;
+            return publishedTimeText.replace("Streamed ","");
         }
 
         return null;
