@@ -6,6 +6,7 @@ import static org.schabi.newpipe.extractor.StreamingService.ServiceInfo.MediaCap
 import static org.schabi.newpipe.extractor.StreamingService.ServiceInfo.MediaCapability.VIDEO;
 import static java.util.Arrays.asList;
 
+import org.schabi.newpipe.extractor.NewPipe;
 import org.schabi.newpipe.extractor.StreamingService;
 import org.schabi.newpipe.extractor.channel.ChannelExtractor;
 import org.schabi.newpipe.extractor.comments.CommentsExtractor;
@@ -137,6 +138,8 @@ public class YoutubeService extends StreamingService {
     @Override
     public KioskList getKioskList() throws ExtractionException {
         final KioskList list = new KioskList(this);
+        list.forceContentCountry(NewPipe.getPreferredContentCountry());
+        list.forceLocalization(NewPipe.getPreferredLocalization());
 
         // add kiosks here e.g.:
         try {
