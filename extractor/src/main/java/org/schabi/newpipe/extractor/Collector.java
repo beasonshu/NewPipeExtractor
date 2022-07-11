@@ -1,7 +1,9 @@
 package org.schabi.newpipe.extractor;
 
+import org.schabi.newpipe.extractor.exceptions.ExtractionException;
 import org.schabi.newpipe.extractor.exceptions.ParsingException;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -25,7 +27,7 @@ public interface Collector<I, E> {
      * @throws ParsingException thrown if there is an error extracting the
      *                          <b>required</b> fields of the item.
      */
-    I extract(E extractor) throws ParsingException;
+    I extract(E extractor) throws ExtractionException, IOException;
 
     /**
      * Get all items
