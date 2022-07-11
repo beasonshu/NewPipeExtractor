@@ -36,6 +36,7 @@ import org.schabi.newpipe.extractor.utils.JsonUtils;
 import org.schabi.newpipe.extractor.utils.Utils;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -99,7 +100,7 @@ public class YoutubeChannelExtractor extends ChannelExtractor {
                             getExtractorLocalization(), getExtractorContentCountry())
                             .value("url", "https://www.youtube.com/" + channelPath)
                             .done())
-                    .getBytes(UTF_8);
+                    .getBytes(StandardCharsets.UTF_8);
 
             final JsonObject jsonResponse = getJsonPostResponse("navigation/resolve_url",
                     body, getExtractorLocalization());
