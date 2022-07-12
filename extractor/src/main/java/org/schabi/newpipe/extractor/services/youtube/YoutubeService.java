@@ -43,6 +43,7 @@ import org.schabi.newpipe.extractor.services.youtube.linkHandler.YoutubeTrending
 import org.schabi.newpipe.extractor.stream.StreamExtractor;
 import org.schabi.newpipe.extractor.subscription.SubscriptionExtractor;
 import org.schabi.newpipe.extractor.suggestion.SuggestionExtractor;
+import org.schabi.newpipe.extractor.uc9muisc.U9MusicExtractor;
 
 import java.util.List;
 
@@ -109,6 +110,10 @@ public class YoutubeService extends StreamingService {
         return new YoutubeChannelExtractor(this, linkHandler);
     }
 
+    @Override
+    public U9MusicExtractor getU9MusicExtractor(final ListLinkHandler linkHandler) {
+        return new U9MusicExtractor(this, linkHandler);
+    }
     @Override
     public PlaylistExtractor getPlaylistExtractor(final ListLinkHandler linkHandler) {
         if (YoutubeParsingHelper.isYoutubeMixId(linkHandler.getId())

@@ -21,6 +21,7 @@ import org.schabi.newpipe.extractor.search.SearchExtractor;
 import org.schabi.newpipe.extractor.stream.StreamExtractor;
 import org.schabi.newpipe.extractor.subscription.SubscriptionExtractor;
 import org.schabi.newpipe.extractor.suggestion.SuggestionExtractor;
+import org.schabi.newpipe.extractor.uc9muisc.U9MusicExtractor;
 import org.schabi.newpipe.extractor.utils.Utils;
 
 import javax.annotation.Nullable;
@@ -399,6 +400,14 @@ public abstract class StreamingService {
 
         throw new IllegalArgumentException(
                 "Localization is not supported (\"" + localization + "\")");
+    }
+
+    public abstract U9MusicExtractor getU9MusicExtractor(ListLinkHandler linkHandler)
+            throws ExtractionException;
+
+
+    public U9MusicExtractor getU9MusicExtractor(final String url) throws ExtractionException {
+        return getU9MusicExtractor(getChannelLHFactory().fromUrl(url));
     }
 
 }
