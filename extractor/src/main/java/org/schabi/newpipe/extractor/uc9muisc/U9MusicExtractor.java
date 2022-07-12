@@ -218,6 +218,7 @@ public  class U9MusicExtractor extends ListExtractor<U9MusicItem> implements Inf
     @Nonnull
     @Override
     public InfoItemsPage<U9MusicItem> getInitialPage() throws IOException, ExtractionException {
+
         return InfoItemsPage.emptyPage();
     }
 

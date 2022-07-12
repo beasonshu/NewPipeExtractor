@@ -1,9 +1,12 @@
 package org.schabi.newpipe.extractor;
 
+import org.schabi.newpipe.extractor.exceptions.ExtractionException;
 import org.schabi.newpipe.extractor.exceptions.FoundAdException;
 import org.schabi.newpipe.extractor.exceptions.ParsingException;
 
 import javax.annotation.Nullable;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -106,6 +109,10 @@ public abstract class InfoItemsCollector<I extends InfoItem, E extends InfoItemE
             // found an ad. Maybe a debug line could be placed here
         } catch (final ParsingException e) {
             addError(e);
+        }  catch (IOException e) {
+            e.printStackTrace();
+        } catch (ExtractionException e) {
+            e.printStackTrace();
         }
     }
 }
