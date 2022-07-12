@@ -1,11 +1,14 @@
 package org.schabi.newpipe.extractor.uc9muisc;
 
+import org.schabi.newpipe.extractor.ListExtractor;
 import org.schabi.newpipe.extractor.ListInfo;
 import org.schabi.newpipe.extractor.NewPipe;
 import org.schabi.newpipe.extractor.StreamingService;
 import org.schabi.newpipe.extractor.channel.ChannelInfo;
 import org.schabi.newpipe.extractor.exceptions.ExtractionException;
 import org.schabi.newpipe.extractor.linkhandler.ListLinkHandler;
+import org.schabi.newpipe.extractor.stream.StreamInfoItem;
+import org.schabi.newpipe.extractor.utils.ExtractorHelper;
 
 import java.io.IOException;
 
@@ -30,13 +33,11 @@ public class U9MusicInfo extends ListInfo<U9MusicItem> {
             throws IOException, ExtractionException {
 
         final int serviceId = extractor.getServiceId();
-        final String id = extractor.getId();
-        final String url = extractor.getUrl();
-        final String originalUrl = extractor.getOriginalUrl();
         final String name = extractor.getName();
 
         final U9MusicInfo info =
                 new U9MusicInfo(serviceId, extractor.getLinkHandler(), name);
+        info.setRelatedItems(extractor.getInitialPage().getItems());
         return info;
     }
 }
