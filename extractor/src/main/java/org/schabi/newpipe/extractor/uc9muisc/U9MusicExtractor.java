@@ -5,6 +5,7 @@ import static org.schabi.newpipe.extractor.services.youtube.YoutubeParsingHelper
 import static org.schabi.newpipe.extractor.utils.Utils.EMPTY_STRING;
 import static org.schabi.newpipe.extractor.utils.Utils.isNullOrEmpty;
 
+import com.grack.nanojson.JsonArray;
 import com.grack.nanojson.JsonObject;
 import com.grack.nanojson.JsonWriter;
 
@@ -25,7 +26,7 @@ import java.nio.charset.StandardCharsets;
 
 import javax.annotation.Nonnull;
 
-public  class U9MusicExtractor extends ListExtractor<U9MusicItem> implements InfoItemExtractor {
+public  class U9MusicExtractor extends ListExtractor<U9MusicSectionItem> implements InfoItemExtractor {
     private JsonObject initialData;
 
     /**
@@ -216,13 +217,21 @@ public  class U9MusicExtractor extends ListExtractor<U9MusicItem> implements Inf
 
     @Nonnull
     @Override
-    public InfoItemsPage<U9MusicItem> getInitialPage() throws IOException, ExtractionException {
+    public InfoItemsPage<U9MusicSectionItem> getInitialPage() throws IOException, ExtractionException {
+        U9MusicItemCollector collector = new U9MusicItemCollector(getServiceId());
+        final JsonArray itemSectionRenderers = initialData.getObject("contents")
+                .getObject("twoColumnBrowseResultsRenderer").getArray("tabs").getObject(0)
+                .getObject("tabRenderer").getObject("content").getObject("sectionListRenderer")
+                .getArray("contents");
+        for (Object itemSection:itemSectionRenderers) {
+//            collector.commit();
+        }
 
         return InfoItemsPage.emptyPage();
     }
 
     @Override
-    public InfoItemsPage<U9MusicItem> getPage(final Page page) throws IOException,
+    public InfoItemsPage<U9MusicSectionItem> getPage(final Page page) throws IOException,
             ExtractionException {
         return InfoItemsPage.emptyPage();
     }
