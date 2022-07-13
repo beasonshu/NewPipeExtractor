@@ -13,6 +13,7 @@ import org.schabi.newpipe.extractor.comments.CommentsExtractor;
 import org.schabi.newpipe.extractor.exceptions.ExtractionException;
 import org.schabi.newpipe.extractor.feed.FeedExtractor;
 import org.schabi.newpipe.extractor.kiosk.KioskList;
+import org.schabi.newpipe.extractor.kiosk.game.KioskGameList;
 import org.schabi.newpipe.extractor.kiosk.music.KioskMusicList;
 import org.schabi.newpipe.extractor.linkhandler.LinkHandler;
 import org.schabi.newpipe.extractor.linkhandler.LinkHandlerFactory;
@@ -35,6 +36,7 @@ import org.schabi.newpipe.extractor.services.youtube.extractors.YoutubeStreamExt
 import org.schabi.newpipe.extractor.services.youtube.extractors.YoutubeSubscriptionExtractor;
 import org.schabi.newpipe.extractor.services.youtube.extractors.YoutubeSuggestionExtractor;
 import org.schabi.newpipe.extractor.services.youtube.extractors.YoutubeTrendingExtractor;
+import org.schabi.newpipe.extractor.services.youtube.extractors.YoutubeTrendingGameExtractor;
 import org.schabi.newpipe.extractor.services.youtube.extractors.YoutubeTrendingMusicExtractor;
 import org.schabi.newpipe.extractor.services.youtube.linkHandler.YoutubeChannelLinkHandlerFactory;
 import org.schabi.newpipe.extractor.services.youtube.linkHandler.YoutubeCommentsLinkHandlerFactory;
@@ -177,6 +179,31 @@ public class YoutubeService extends StreamingService {
         try {
             list.addKioskEntry(
                     (streamingService, url, id) -> new YoutubeTrendingMusicExtractor(
+                            YoutubeService.this,
+                            new YoutubeTrendingLinkHandlerFactory().fromUrl(url),
+                            id
+                    ),
+                    new YoutubeTrendingLinkHandlerFactory(),
+                    "Trending"
+            );
+            list.setDefaultKiosk("Trending");
+        } catch (final Exception e) {
+            throw new ExtractionException(e);
+        }
+
+        return list;
+    }
+
+    @Override
+    public KioskGameList getKioskGameList() throws ExtractionException{
+        final KioskGameList list = new KioskGameList(this);
+        list.forceContentCountry(NewPipe.getPreferredContentCountry());
+        list.forceLocalization(NewPipe.getPreferredLocalization());
+
+        // add kiosks here e.g.:
+        try {
+            list.addKioskEntry(
+                    (streamingService, url, id) -> new YoutubeTrendingGameExtractor(
                             YoutubeService.this,
                             new YoutubeTrendingLinkHandlerFactory().fromUrl(url),
                             id
