@@ -13,6 +13,7 @@ import org.schabi.newpipe.extractor.comments.CommentsExtractor;
 import org.schabi.newpipe.extractor.exceptions.ExtractionException;
 import org.schabi.newpipe.extractor.feed.FeedExtractor;
 import org.schabi.newpipe.extractor.kiosk.KioskList;
+import org.schabi.newpipe.extractor.kiosk.music.KioskMusicList;
 import org.schabi.newpipe.extractor.linkhandler.LinkHandler;
 import org.schabi.newpipe.extractor.linkhandler.LinkHandlerFactory;
 import org.schabi.newpipe.extractor.linkhandler.ListLinkHandler;
@@ -36,6 +37,7 @@ import org.schabi.newpipe.extractor.services.youtube.extractors.YoutubeStreamExt
 import org.schabi.newpipe.extractor.services.youtube.extractors.YoutubeSubscriptionExtractor;
 import org.schabi.newpipe.extractor.services.youtube.extractors.YoutubeSuggestionExtractor;
 import org.schabi.newpipe.extractor.services.youtube.extractors.YoutubeTrendingExtractor;
+import org.schabi.newpipe.extractor.services.youtube.extractors.YoutubeTrendingMusicExtractor;
 import org.schabi.newpipe.extractor.services.youtube.linkHandler.YoutubeChannelLinkHandlerFactory;
 import org.schabi.newpipe.extractor.services.youtube.linkHandler.YoutubeChannelTabLinkHandlerFactory;
 import org.schabi.newpipe.extractor.services.youtube.linkHandler.YoutubeCommentsLinkHandlerFactory;
@@ -168,6 +170,31 @@ public class YoutubeService extends StreamingService {
                     YoutubeTrendingExtractor.KIOSK_ID
             );
             list.setDefaultKiosk(YoutubeTrendingExtractor.KIOSK_ID);
+        } catch (final Exception e) {
+            throw new ExtractionException(e);
+        }
+
+        return list;
+    }
+
+    @Override
+    public KioskMusicList getKioskMusicList() throws ExtractionException{
+        final KioskMusicList list = new KioskMusicList(this);
+        list.forceContentCountry(NewPipe.getPreferredContentCountry());
+        list.forceLocalization(NewPipe.getPreferredLocalization());
+
+        // add kiosks here e.g.:
+        try {
+            list.addKioskEntry(
+                    (streamingService, url, id) -> new YoutubeTrendingMusicExtractor(
+                            YoutubeService.this,
+                            new YoutubeTrendingLinkHandlerFactory().fromUrl(url),
+                            id
+                    ),
+                    new YoutubeTrendingLinkHandlerFactory(),
+                    "Trending"
+            );
+            list.setDefaultKiosk("Trending");
         } catch (final Exception e) {
             throw new ExtractionException(e);
         }
