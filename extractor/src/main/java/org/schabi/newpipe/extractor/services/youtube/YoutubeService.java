@@ -14,6 +14,7 @@ import org.schabi.newpipe.extractor.exceptions.ExtractionException;
 import org.schabi.newpipe.extractor.feed.FeedExtractor;
 import org.schabi.newpipe.extractor.kiosk.KioskList;
 import org.schabi.newpipe.extractor.kiosk.game.KioskGameList;
+import org.schabi.newpipe.extractor.kiosk.movie.KioskMovieList;
 import org.schabi.newpipe.extractor.kiosk.music.KioskMusicList;
 import org.schabi.newpipe.extractor.linkhandler.LinkHandler;
 import org.schabi.newpipe.extractor.linkhandler.LinkHandlerFactory;
@@ -37,6 +38,7 @@ import org.schabi.newpipe.extractor.services.youtube.extractors.YoutubeSubscript
 import org.schabi.newpipe.extractor.services.youtube.extractors.YoutubeSuggestionExtractor;
 import org.schabi.newpipe.extractor.services.youtube.extractors.YoutubeTrendingExtractor;
 import org.schabi.newpipe.extractor.services.youtube.extractors.YoutubeTrendingGameExtractor;
+import org.schabi.newpipe.extractor.services.youtube.extractors.YoutubeTrendingMovieExtractor;
 import org.schabi.newpipe.extractor.services.youtube.extractors.YoutubeTrendingMusicExtractor;
 import org.schabi.newpipe.extractor.services.youtube.linkHandler.YoutubeChannelLinkHandlerFactory;
 import org.schabi.newpipe.extractor.services.youtube.linkHandler.YoutubeCommentsLinkHandlerFactory;
@@ -218,6 +220,33 @@ public class YoutubeService extends StreamingService {
 
         return list;
     }
+
+    @Override
+    public KioskMovieList getKioskMovieList() throws ExtractionException{
+        final KioskMovieList list = new KioskMovieList(this);
+        list.forceContentCountry(NewPipe.getPreferredContentCountry());
+        list.forceLocalization(NewPipe.getPreferredLocalization());
+
+        // add kiosks here e.g.:
+        try {
+            list.addKioskEntry(
+                    (streamingService, url, id) -> new YoutubeTrendingMovieExtractor(
+                            YoutubeService.this,
+                            new YoutubeTrendingLinkHandlerFactory().fromUrl(url),
+                            id
+                    ),
+                    new YoutubeTrendingLinkHandlerFactory(),
+                    "Trending"
+            );
+            list.setDefaultKiosk("Trending");
+        } catch (final Exception e) {
+            throw new ExtractionException(e);
+        }
+
+        return list;
+    }
+
+
 
     @Override
     public SubscriptionExtractor getSubscriptionExtractor() {
