@@ -61,6 +61,7 @@ public class YoutubeTrendingExtractor extends KioskExtractor<StreamInfoItem> {
         final byte[] body = JsonWriter.string(prepareDesktopJsonBuilder(getExtractorLocalization(),
                 getExtractorContentCountry())
                 .value("browseId", "FEtrending")
+                        .value("params", "4gIcGhpnYW1pbmdfY29ycHVzX21vc3RfcG9wdWxhcg%3D%3D") // Equal to videos
                 .done())
                 .getBytes(UTF_8);
         // @formatter:on
