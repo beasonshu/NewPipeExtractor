@@ -7,6 +7,7 @@ import org.schabi.newpipe.extractor.exceptions.ExtractionException;
 import org.schabi.newpipe.extractor.exceptions.ParsingException;
 import org.schabi.newpipe.extractor.feed.FeedExtractor;
 import org.schabi.newpipe.extractor.kiosk.KioskList;
+import org.schabi.newpipe.extractor.kiosk.game.KioskGameList;
 import org.schabi.newpipe.extractor.kiosk.music.KioskMusicList;
 import org.schabi.newpipe.extractor.linkhandler.LinkHandler;
 import org.schabi.newpipe.extractor.linkhandler.LinkHandlerFactory;
@@ -208,6 +209,8 @@ public abstract class StreamingService {
     public abstract KioskList getKioskList() throws ExtractionException;
 
     public abstract KioskMusicList getKioskMusicList() throws ExtractionException;
+
+    public abstract KioskGameList getKioskGameList() throws ExtractionException;
 
     /**
      * Must create a new instance of a ChannelExtractor implementation.
