@@ -46,6 +46,10 @@ public abstract class Downloader {
         return get(url, null, localization);
     }
 
+    public String getPlayerCode(){
+        return null;
+    }
+
     /**
      * Do a GET request with the specified headers.
      *
