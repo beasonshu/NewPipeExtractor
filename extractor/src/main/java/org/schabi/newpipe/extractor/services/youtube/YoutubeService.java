@@ -174,8 +174,8 @@ public class YoutubeService extends StreamingService {
     @Override
     public KioskMusicList getKioskMusicList() throws ExtractionException{
         final KioskMusicList list = new KioskMusicList(this);
-        list.forceContentCountry(NewPipe.getPreferredContentCountry());
-        list.forceLocalization(NewPipe.getPreferredLocalization());
+//        list.forceContentCountry(NewPipe.getPreferredContentCountry());
+//        list.forceLocalization(NewPipe.getPreferredLocalization());
 
         // add kiosks here e.g.:
         try {
@@ -199,8 +199,8 @@ public class YoutubeService extends StreamingService {
     @Override
     public KioskGameList getKioskGameList() throws ExtractionException{
         final KioskGameList list = new KioskGameList(this);
-        list.forceContentCountry(NewPipe.getPreferredContentCountry());
-        list.forceLocalization(NewPipe.getPreferredLocalization());
+//        list.forceContentCountry(NewPipe.getPreferredContentCountry());
+//        list.forceLocalization(NewPipe.getPreferredLocalization());
 
         // add kiosks here e.g.:
         try {
@@ -224,8 +224,8 @@ public class YoutubeService extends StreamingService {
     @Override
     public KioskMovieList getKioskMovieList() throws ExtractionException{
         final KioskMovieList list = new KioskMovieList(this);
-        list.forceContentCountry(NewPipe.getPreferredContentCountry());
-        list.forceLocalization(NewPipe.getPreferredLocalization());
+//        list.forceContentCountry(NewPipe.getPreferredContentCountry());
+//        list.forceLocalization(NewPipe.getPreferredLocalization());
 
         // add kiosks here e.g.:
         try {
