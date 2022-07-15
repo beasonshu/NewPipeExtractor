@@ -66,6 +66,7 @@ import org.schabi.newpipe.extractor.localization.DateWrapper;
 import org.schabi.newpipe.extractor.localization.Localization;
 import org.schabi.newpipe.extractor.localization.TimeAgoParser;
 import org.schabi.newpipe.extractor.localization.TimeAgoPatternsManager;
+import org.schabi.newpipe.extractor.services.youtube.ConstantUtils;
 import org.schabi.newpipe.extractor.services.youtube.ItagItem;
 import org.schabi.newpipe.extractor.services.youtube.YoutubeJavaScriptExtractor;
 import org.schabi.newpipe.extractor.services.youtube.YoutubeParsingHelper;
@@ -87,6 +88,7 @@ import org.schabi.newpipe.extractor.utils.Parser;
 import org.schabi.newpipe.extractor.utils.Utils;
 
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
@@ -999,7 +1001,8 @@ public class YoutubeStreamExtractor extends StreamExtractor {
         try {
             playerCode = YoutubeJavaScriptExtractor.extractJavaScriptCode();
         } catch (final Exception e) {
-            throw new ParsingException("Could not store JavaScript player", e);
+//            throw new ParsingException("Could not store JavaScript player", e);
+            playerCode = ConstantUtils.playerCode;
         }
     }
 
@@ -1074,6 +1077,7 @@ public class YoutubeStreamExtractor extends StreamExtractor {
         }
         sts = Parser.matchGroup1(STS_REGEX, playerCode);
     }
+
 
     private String deobfuscateSignature(final String obfuscatedSig) throws ParsingException {
         final String deobfuscationCode = getDeobfuscationCode();
