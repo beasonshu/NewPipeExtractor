@@ -1,5 +1,6 @@
 package org.schabi.newpipe.extractor.services.youtube.extractors;
 
+import static org.schabi.newpipe.extractor.services.youtube.YoutubeParsingHelper.getCoverUrlFromInfoItem;
 import static org.schabi.newpipe.extractor.services.youtube.YoutubeParsingHelper.getTextFromObject;
 import static org.schabi.newpipe.extractor.services.youtube.YoutubeParsingHelper.getThumbnailUrlFromInfoItem;
 import static org.schabi.newpipe.extractor.services.youtube.YoutubeParsingHelper.getUrlFromNavigationEndpoint;
@@ -281,6 +282,11 @@ public class YoutubeStreamInfoItemExtractor implements StreamInfoItemExtractor {
     @Override
     public String getThumbnailUrl() throws ParsingException {
         return getThumbnailUrlFromInfoItem(videoInfo);
+    }
+
+    @Override
+    public String getBigCoverUrl() throws ParsingException {
+        return getCoverUrlFromInfoItem(videoInfo);
     }
 
     private boolean isPremium() {

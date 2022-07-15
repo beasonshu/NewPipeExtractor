@@ -30,6 +30,11 @@ public class YoutubePlaylistInfoItemExtractor implements PlaylistInfoItemExtract
     }
 
     @Override
+    public String getBigCoverUrl() throws ParsingException {
+        return null;
+    }
+
+    @Override
     public String getName() throws ParsingException {
         try {
             return getTextFromObject(playlistInfoItem.getObject("title"));

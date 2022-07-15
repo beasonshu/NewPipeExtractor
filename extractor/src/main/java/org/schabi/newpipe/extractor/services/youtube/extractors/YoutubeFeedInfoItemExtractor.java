@@ -93,4 +93,9 @@ public class YoutubeFeedInfoItemExtractor implements StreamInfoItemExtractor {
     public String getThumbnailUrl() {
         return entryElement.getElementsByTag("media:thumbnail").first().attr("url");
     }
+
+    @Override
+    public String getBigCoverUrl() throws ParsingException {
+        return null;
+    }
 }

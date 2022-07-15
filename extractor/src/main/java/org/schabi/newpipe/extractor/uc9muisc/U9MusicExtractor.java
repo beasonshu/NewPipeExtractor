@@ -176,6 +176,11 @@ public  class U9MusicExtractor extends ListExtractor<U9MusicSectionItem> impleme
         return null;
     }
 
+    @Override
+    public String getBigCoverUrl() throws ParsingException {
+        return null;
+    }
+
     @Nonnull
     @Override
     public String getId() throws ParsingException {

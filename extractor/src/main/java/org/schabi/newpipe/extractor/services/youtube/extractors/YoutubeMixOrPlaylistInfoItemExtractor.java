@@ -1,6 +1,7 @@
 package org.schabi.newpipe.extractor.services.youtube.extractors;
 
 import static org.schabi.newpipe.extractor.services.youtube.YoutubeParsingHelper.extractPlaylistTypeFromPlaylistUrl;
+import static org.schabi.newpipe.extractor.services.youtube.YoutubeParsingHelper.getCoverUrlFromInfoItem;
 import static org.schabi.newpipe.extractor.services.youtube.YoutubeParsingHelper.getTextFromObject;
 import static org.schabi.newpipe.extractor.services.youtube.YoutubeParsingHelper.getThumbnailUrlFromInfoItem;
 import static org.schabi.newpipe.extractor.utils.Utils.isNullOrEmpty;
@@ -43,6 +44,11 @@ public class YoutubeMixOrPlaylistInfoItemExtractor implements PlaylistInfoItemEx
     @Override
     public String getThumbnailUrl() throws ParsingException {
         return getThumbnailUrlFromInfoItem(mixInfoItem);
+    }
+
+    @Override
+    public String getBigCoverUrl() throws ParsingException {
+        return getCoverUrlFromInfoItem(mixInfoItem);
     }
 
     @Override
