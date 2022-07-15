@@ -27,6 +27,7 @@ import org.schabi.newpipe.extractor.Page;
 import org.schabi.newpipe.extractor.StreamingService;
 import org.schabi.newpipe.extractor.exceptions.ExtractionException;
 import org.schabi.newpipe.extractor.kiosk.KioskExtractor;
+import org.schabi.newpipe.extractor.kiosk.game.KioskGameInfo;
 import org.schabi.newpipe.extractor.linkhandler.ListLinkHandler;
 import org.schabi.newpipe.extractor.stream.StreamInfoItem;
 import org.schabi.newpipe.extractor.utils.ExtractorHelper;
@@ -41,7 +42,7 @@ public final class KioskMovieInfo extends ListInfo<StreamInfoItem> {
     public static ListExtractor.InfoItemsPage<StreamInfoItem> getMoreItems(
             final StreamingService service, final String url, final Page page)
             throws IOException, ExtractionException {
-        return service.getKioskMovieList().getExtractorByUrl(url, page).getPage(page);
+        return service.getKioskMovieList(false).getExtractorByUrl(url, page).getPage(page);
     }
 
     public static KioskMovieInfo getInfo(final String url) throws IOException, ExtractionException {
@@ -50,9 +51,15 @@ public final class KioskMovieInfo extends ListInfo<StreamInfoItem> {
 
     public static KioskMovieInfo getInfo(final StreamingService service, final String url)
             throws IOException, ExtractionException {
-        final KioskExtractor extractor = service.getKioskMovieList().getExtractorByUrl(url, null);
+        final KioskExtractor extractor = service.getKioskMovieList(false).getExtractorByUrl(url, null);
         extractor.fetchPage();
-        return getInfo(extractor);
+        KioskMovieInfo kioskMovieInfo = getInfo(extractor);
+        if (kioskMovieInfo.getRelatedItems().isEmpty()){
+            final KioskExtractor extractor1 = service.getKioskMovieList(true).getExtractorByUrl(url, null);
+            extractor1.fetchPage();
+            return getInfo(extractor1);
+        }
+        return kioskMovieInfo;
     }
 
     /**

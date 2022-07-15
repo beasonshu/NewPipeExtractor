@@ -41,7 +41,7 @@ public final class KioskGameInfo extends ListInfo<StreamInfoItem> {
     public static ListExtractor.InfoItemsPage<StreamInfoItem> getMoreItems(
             final StreamingService service, final String url, final Page page)
             throws IOException, ExtractionException {
-        return service.getKioskGameList().getExtractorByUrl(url, page).getPage(page);
+        return service.getKioskGameList(false).getExtractorByUrl(url, page).getPage(page);
     }
 
     public static KioskGameInfo getInfo(final String url) throws IOException, ExtractionException {
@@ -50,9 +50,15 @@ public final class KioskGameInfo extends ListInfo<StreamInfoItem> {
 
     public static KioskGameInfo getInfo(final StreamingService service, final String url)
             throws IOException, ExtractionException {
-        final KioskExtractor extractor = service.getKioskGameList().getExtractorByUrl(url, null);
+        final KioskExtractor extractor = service.getKioskGameList(false).getExtractorByUrl(url, null);
         extractor.fetchPage();
-        return getInfo(extractor);
+        KioskGameInfo kioskGameInfo = getInfo(extractor);
+        if (kioskGameInfo.getRelatedItems().isEmpty()){
+            final KioskExtractor extractor1 = service.getKioskGameList(true).getExtractorByUrl(url, null);
+            extractor1.fetchPage();
+            return getInfo(extractor1);
+        }
+        return kioskGameInfo;
     }
 
     /**

@@ -209,11 +209,11 @@ public abstract class StreamingService {
      */
     public abstract KioskList getKioskList() throws ExtractionException;
 
-    public abstract KioskMusicList getKioskMusicList() throws ExtractionException;
+    public abstract KioskMusicList getKioskMusicList(boolean useDefaultCountry) throws ExtractionException;
 
-    public abstract KioskGameList getKioskGameList() throws ExtractionException;
+    public abstract KioskGameList getKioskGameList(boolean useDefaultCountry) throws ExtractionException;
 
-    public abstract KioskMovieList getKioskMovieList() throws ExtractionException;
+    public abstract KioskMovieList getKioskMovieList(boolean useDefaultCountry) throws ExtractionException;
 
     /**
      * Must create a new instance of a ChannelExtractor implementation.
