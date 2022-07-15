@@ -134,4 +134,9 @@ public class YoutubeFeedInfoItemExtractor implements StreamInfoItemExtractor {
         return List.of(
                 new Image(newFeedThumbnailUrl, height, width, ResolutionLevel.fromHeight(height)));
     }
+
+    @Override
+    public String getBigCoverUrl() throws ParsingException {
+        return null;
+    }
 }

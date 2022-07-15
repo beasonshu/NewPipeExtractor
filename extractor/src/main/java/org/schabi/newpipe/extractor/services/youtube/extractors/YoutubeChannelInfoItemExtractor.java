@@ -20,6 +20,7 @@
 
 package org.schabi.newpipe.extractor.services.youtube.extractors;
 
+import com.grack.nanojson.JsonArray;
 import com.grack.nanojson.JsonObject;
 
 import org.schabi.newpipe.extractor.Image;
@@ -64,6 +65,19 @@ public class YoutubeChannelInfoItemExtractor implements ChannelInfoItemExtractor
             return getThumbnailsFromInfoItem(channelInfoItem);
         } catch (final Exception e) {
             throw new ParsingException("Could not get thumbnails", e);
+        }
+    }
+
+    @Override
+    public String getBigCoverUrl() throws ParsingException {
+        try {
+            JsonArray thumbnails = channelInfoItem.getObject("thumbnail").getArray("thumbnails");
+            final String url = thumbnails
+                    .getObject(thumbnails.size()).getString("url");
+
+            return fixThumbnailUrl(url);
+        } catch (final Exception e) {
+            throw new ParsingException("Could not get thumbnail url", e);
         }
     }
 

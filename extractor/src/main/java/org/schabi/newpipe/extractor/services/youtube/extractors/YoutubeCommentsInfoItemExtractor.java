@@ -68,6 +68,11 @@ public class YoutubeCommentsInfoItemExtractor implements CommentsInfoItemExtract
     }
 
     @Override
+    public String getBigCoverUrl() throws ParsingException {
+        return null;
+    }
+
+    @Override
     public String getName() throws ParsingException {
         try {
             return getTextFromObject(JsonUtils.getObject(getCommentRenderer(), "authorText"));

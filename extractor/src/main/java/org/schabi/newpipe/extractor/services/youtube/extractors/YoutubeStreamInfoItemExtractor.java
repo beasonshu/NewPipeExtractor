@@ -18,6 +18,7 @@
 
 package org.schabi.newpipe.extractor.services.youtube.extractors;
 
+import static org.schabi.newpipe.extractor.services.youtube.YoutubeParsingHelper.getCoverUrlFromInfoItem;
 import static org.schabi.newpipe.extractor.services.youtube.YoutubeParsingHelper.getTextFromObject;
 import static org.schabi.newpipe.extractor.services.youtube.YoutubeParsingHelper.getThumbnailsFromInfoItem;
 import static org.schabi.newpipe.extractor.services.youtube.YoutubeParsingHelper.getImagesFromThumbnailsArray;
@@ -381,6 +382,11 @@ public class YoutubeStreamInfoItemExtractor implements StreamInfoItemExtractor {
     @Override
     public List<Image> getThumbnails() throws ParsingException {
         return getThumbnailsFromInfoItem(videoInfo);
+    }
+
+    @Override
+    public String getBigCoverUrl() throws ParsingException {
+        return getCoverUrlFromInfoItem(videoInfo);
     }
 
     private boolean isPremium() {
