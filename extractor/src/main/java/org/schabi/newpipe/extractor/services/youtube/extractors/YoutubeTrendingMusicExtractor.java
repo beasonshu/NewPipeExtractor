@@ -77,7 +77,7 @@ public class YoutubeTrendingMusicExtractor extends KioskExtractor<StreamInfoItem
     @Nonnull
     @Override
     public String getName() throws ParsingException {
-        final JsonObject header = initialData.getObject("header");
+        /*final JsonObject header = initialData.getObject("header");
         String name = null;
         if (header.has("feedTabbedHeaderRenderer")) {
             name = getTextAtKey(header.getObject("feedTabbedHeaderRenderer"), "title");
@@ -87,8 +87,8 @@ public class YoutubeTrendingMusicExtractor extends KioskExtractor<StreamInfoItem
 
         if (isNullOrEmpty(name)) {
             throw new ParsingException("Could not get Trending name");
-        }
-        return name;
+        }*/
+        return "music";
     }
 
     @Nonnull
