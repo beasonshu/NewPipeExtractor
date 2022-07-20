@@ -79,6 +79,11 @@ public class StreamInfoItemsCollector
             addError(e);
         }
         try {
+            resultItem.setBigCoverUrl(extractor.getBigCoverUrl());
+        } catch (final Exception e) {
+            addError(e);
+        }
+        try {
             resultItem.setUploaderUrl(extractor.getUploaderUrl());
         } catch (final Exception e) {
             addError(e);

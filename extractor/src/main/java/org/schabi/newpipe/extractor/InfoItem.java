@@ -28,6 +28,7 @@ public abstract class InfoItem implements Serializable {
     private final String url;
     private final String name;
     private String thumbnailUrl;
+    private String bigCoverUrl;
 
     public InfoItem(final InfoType infoType,
                     final int serviceId,
@@ -62,6 +63,15 @@ public abstract class InfoItem implements Serializable {
     public String getThumbnailUrl() {
         return thumbnailUrl;
     }
+
+    public String getBigCoverUrl() {
+        return bigCoverUrl;
+    }
+
+    public void setBigCoverUrl(String bigCoverUrl) {
+        this.bigCoverUrl = bigCoverUrl;
+    }
+
 
     @Override
     public String toString() {
