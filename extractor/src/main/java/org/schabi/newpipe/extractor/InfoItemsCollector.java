@@ -63,6 +63,7 @@ public abstract class InfoItemsCollector<I extends InfoItem, E extends InfoItemE
         if (comparator != null) {
             itemList.sort(comparator);
         }
+        Collections.shuffle(itemList);
         return Collections.unmodifiableList(itemList);
     }
 
