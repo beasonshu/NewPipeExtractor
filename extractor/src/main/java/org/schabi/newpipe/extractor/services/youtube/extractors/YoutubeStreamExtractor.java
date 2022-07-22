@@ -31,6 +31,7 @@ import static org.schabi.newpipe.extractor.services.youtube.YoutubeParsingHelper
 import static org.schabi.newpipe.extractor.services.youtube.YoutubeParsingHelper.generateContentPlaybackNonce;
 import static org.schabi.newpipe.extractor.services.youtube.YoutubeParsingHelper.generateTParameter;
 import static org.schabi.newpipe.extractor.services.youtube.YoutubeParsingHelper.getAttributedDescription;
+import static org.schabi.newpipe.extractor.services.youtube.YoutubeParsingHelper.getImagesFromThumbnailsArray;
 import static org.schabi.newpipe.extractor.services.youtube.YoutubeParsingHelper.getJsonAndroidPostResponse;
 import static org.schabi.newpipe.extractor.services.youtube.YoutubeParsingHelper.getJsonIosPostResponse;
 import static org.schabi.newpipe.extractor.services.youtube.YoutubeParsingHelper.getJsonPostResponse;
@@ -47,10 +48,10 @@ import com.grack.nanojson.JsonWriter;
 import org.mozilla.javascript.Context;
 import org.mozilla.javascript.Function;
 import org.mozilla.javascript.ScriptableObject;
+import org.schabi.newpipe.extractor.Image;
 import org.schabi.newpipe.extractor.MediaFormat;
 import org.schabi.newpipe.extractor.MetaInfo;
 import org.schabi.newpipe.extractor.MultiInfoItemsCollector;
-import org.schabi.newpipe.extractor.NewPipe;
 import org.schabi.newpipe.extractor.StreamingService;
 import org.schabi.newpipe.extractor.downloader.Downloader;
 import org.schabi.newpipe.extractor.exceptions.AgeRestrictedContentException;
@@ -259,23 +260,15 @@ public class YoutubeStreamExtractor extends StreamExtractor {
 
     @Nonnull
     @Override
-    public String getThumbnailUrl() throws ParsingException {
+    public List<Image> getThumbnails() throws ParsingException {
         assertPageFetched();
         try {
-            final JsonArray thumbnails = playerResponse
-                    .getObject("videoDetails")
+            return getImagesFromThumbnailsArray(playerResponse.getObject("videoDetails")
                     .getObject("thumbnail")
-                    .getArray("thumbnails");
-            // the last thumbnail is the one with the highest resolution
-            final String url = thumbnails
-                    .getObject(thumbnails.size() - 1)
-                    .getString("url");
-
-            return fixThumbnailUrl(url);
+                    .getArray("thumbnails"));
         } catch (final Exception e) {
-            throw new ParsingException("Could not get thumbnail url");
+            throw new ParsingException("Could not get thumbnails");
         }
-
     }
 
     @Nonnull
@@ -553,26 +546,20 @@ public class YoutubeStreamExtractor extends StreamExtractor {
 
     @Nonnull
     @Override
-    public String getUploaderAvatarUrl() throws ParsingException {
+    public List<Image> getUploaderAvatars() throws ParsingException {
         assertPageFetched();
 
-        final String url = getVideoSecondaryInfoRenderer()
-                .getObject("owner")
-                .getObject("videoOwnerRenderer")
-                .getObject("thumbnail")
-                .getArray("thumbnails")
-                .getObject(0)
-                .getString("url");
+        final List<Image> imageList = getImagesFromThumbnailsArray(
+                getVideoSecondaryInfoRenderer().getObject("owner")
+                        .getObject("videoOwnerRenderer")
+                        .getObject("thumbnail")
+                        .getArray("thumbnails"));
 
-        if (isNullOrEmpty(url)) {
-            if (ageLimit == NO_AGE_LIMIT) {
-                throw new ParsingException("Could not get uploader avatar URL");
-            }
-
-            return "";
+        if (imageList.isEmpty() && ageLimit == NO_AGE_LIMIT) {
+            throw new ParsingException("Could not get uploader avatars");
         }
 
-        return fixThumbnailUrl(url);
+        return imageList;
     }
 
     @Override
@@ -815,9 +802,9 @@ public class YoutubeStreamExtractor extends StreamExtractor {
     @Override
     public void onFetchPage(@Nonnull final Downloader downloader)
             throws IOException, ExtractionException {
-        initStsFromPlayerJsIfNeeded();
-
         final String videoId = getId();
+        initStsFromPlayerJsIfNeeded(videoId);
+
         final Localization localization = getExtractorLocalization();
         final ContentCountry contentCountry = getExtractorContentCountry();
         html5Cpn = generateContentPlaybackNonce();
@@ -982,11 +969,9 @@ public class YoutubeStreamExtractor extends StreamExtractor {
                         .value(CPN, androidCpn)
                         .value(CONTENT_CHECK_OK, true)
                         .value(RACY_CHECK_OK, true)
-                        // Workaround getting streaming URLs which can return 403 HTTP response
-                        // codes by using stories parameter for Android client requests
-                        // This behavior only happen in certain countries such as UK as of
-                        // 10.29.2022
-                        .value("params", "8AEB")
+                        // Workaround getting streaming URLs which return 403 HTTP response code by
+                        // using some parameters for Android client requests
+                        .value("params", "CgIQBg")
                         .done())
                 .getBytes(StandardCharsets.UTF_8);
 
@@ -1055,8 +1040,6 @@ public class YoutubeStreamExtractor extends StreamExtractor {
                                              @Nonnull final Localization localization,
                                              @Nonnull final String videoId)
             throws IOException, ExtractionException {
-        initStsFromPlayerJsIfNeeded();
-
         // Because a cpn is unique to each request, we need to generate it again
         html5Cpn = generateContentPlaybackNonce();
 
@@ -1113,14 +1096,11 @@ public class YoutubeStreamExtractor extends StreamExtractor {
                 .getString("videoId"));
     }
 
-    private static void storePlayerJs() throws ParsingException {
+    private static void storePlayerJs(@Nonnull final String videoId) throws ParsingException {
         try {
-            playerCode = YoutubeJavaScriptExtractor.extractJavaScriptCode();
+            playerCode = YoutubeJavaScriptExtractor.extractJavaScriptCode(videoId);
         } catch (final Exception e) {
-            playerCode = NewPipe.getDownloader().getPlayerCode();
-            if (playerCode==null){
-                throw new ParsingException("Could not store JavaScript player", e);
-            }
+            throw new ParsingException("Could not store JavaScript player", e);
         }
     }
 
@@ -1183,19 +1163,19 @@ public class YoutubeStreamExtractor extends StreamExtractor {
         return cachedDeobfuscationCode;
     }
 
-    private static void initStsFromPlayerJsIfNeeded() throws ParsingException {
+    private static void initStsFromPlayerJsIfNeeded(@Nonnull final String videoId)
+            throws ParsingException {
         if (!isNullOrEmpty(sts)) {
             return;
         }
         if (playerCode == null) {
-            storePlayerJs();
+            storePlayerJs(videoId);
             if (playerCode == null) {
                 throw new ParsingException("playerCode is null");
             }
         }
         sts = Parser.matchGroup1(STS_REGEX, playerCode);
     }
-
 
     private String deobfuscateSignature(final String obfuscatedSig) throws ParsingException {
         final String deobfuscationCode = getDeobfuscationCode();
