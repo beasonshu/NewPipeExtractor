@@ -1,17 +1,5 @@
 package org.schabi.newpipe.extractor.services;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.schabi.newpipe.extractor.ExtractorAsserts.assertEqualsOrderIndependent;
-import static org.schabi.newpipe.extractor.ExtractorAsserts.assertGreaterOrEqual;
-import static org.schabi.newpipe.extractor.ExtractorAsserts.assertIsSecureUrl;
-import static org.schabi.newpipe.extractor.ExtractorAsserts.assertIsValidUrl;
-import static org.schabi.newpipe.extractor.services.DefaultTests.defaultTestListOfItems;
-import static org.schabi.newpipe.extractor.stream.StreamExtractor.UNKNOWN_SUBSCRIBER_COUNT;
-
 import org.junit.jupiter.api.Test;
 import org.schabi.newpipe.extractor.ExtractorAsserts;
 import org.schabi.newpipe.extractor.InfoItemsCollector;
@@ -26,16 +14,29 @@ import org.schabi.newpipe.extractor.stream.StreamType;
 import org.schabi.newpipe.extractor.stream.SubtitlesStream;
 import org.schabi.newpipe.extractor.stream.VideoStream;
 
-import java.net.MalformedURLException;
-import java.net.URL;
+import javax.annotation.Nullable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
 
-import javax.annotation.Nullable;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.schabi.newpipe.extractor.ExtractorAsserts.assertEmpty;
+import static org.schabi.newpipe.extractor.ExtractorAsserts.assertEqualsOrderIndependent;
+import static org.schabi.newpipe.extractor.ExtractorAsserts.assertGreaterOrEqual;
+import static org.schabi.newpipe.extractor.ExtractorAsserts.assertIsSecureUrl;
+import static org.schabi.newpipe.extractor.ExtractorAsserts.assertIsValidUrl;
+import static org.schabi.newpipe.extractor.services.DefaultTests.defaultTestImageCollection;
+import static org.schabi.newpipe.extractor.services.DefaultTests.defaultTestListOfItems;
+import static org.schabi.newpipe.extractor.stream.StreamExtractor.UNKNOWN_SUBSCRIBER_COUNT;
 
 /**
  * Test for {@link StreamExtractor}
@@ -99,8 +100,8 @@ public abstract class DefaultStreamExtractorTest extends DefaultExtractorTest<St
 
     @Test
     @Override
-    public void testUploaderAvatarUrl() throws Exception {
-        assertIsSecureUrl(extractor().getUploaderAvatarUrl());
+    public void testUploaderAvatars() throws Exception {
+        defaultTestImageCollection(extractor().getUploaderAvatars());
     }
 
     @Test
@@ -138,20 +139,20 @@ public abstract class DefaultStreamExtractorTest extends DefaultExtractorTest<St
 
     @Test
     @Override
-    public void testSubChannelAvatarUrl() throws Exception {
+    public void testSubChannelAvatars() throws Exception {
         if (expectedSubChannelName().isEmpty() && expectedSubChannelUrl().isEmpty()) {
             // this stream has no subchannel
-            assertEquals("", extractor().getSubChannelAvatarUrl());
+            assertEmpty(extractor().getSubChannelAvatars());
         } else {
             // this stream has a subchannel
-            assertIsSecureUrl(extractor().getSubChannelAvatarUrl());
+            defaultTestImageCollection(extractor().getSubChannelAvatars());
         }
     }
 
     @Test
     @Override
-    public void testThumbnailUrl() throws Exception {
-        assertIsSecureUrl(extractor().getThumbnailUrl());
+    public void testThumbnails() throws Exception {
+        defaultTestImageCollection(extractor().getThumbnails());
     }
 
     @Test
