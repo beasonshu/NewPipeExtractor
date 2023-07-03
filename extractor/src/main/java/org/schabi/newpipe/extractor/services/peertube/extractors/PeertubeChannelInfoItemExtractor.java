@@ -41,6 +41,11 @@ public class PeertubeChannelInfoItemExtractor implements ChannelInfoItemExtracto
     }
 
     @Override
+    public String getBigCoverUrl() throws ParsingException {
+        return null;
+    }
+
+    @Override
     public String getDescription() throws ParsingException {
         return item.getString("description");
     }
