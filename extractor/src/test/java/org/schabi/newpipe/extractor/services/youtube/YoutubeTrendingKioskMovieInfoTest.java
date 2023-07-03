@@ -30,7 +30,6 @@ import org.schabi.newpipe.downloader.DownloaderFactory;
 import org.schabi.newpipe.extractor.NewPipe;
 import org.schabi.newpipe.extractor.StreamingService;
 import org.schabi.newpipe.extractor.kiosk.KioskInfo;
-import org.schabi.newpipe.extractor.kiosk.game.KioskGameInfo;
 import org.schabi.newpipe.extractor.kiosk.movie.KioskMovieInfo;
 import org.schabi.newpipe.extractor.linkhandler.LinkHandlerFactory;
 

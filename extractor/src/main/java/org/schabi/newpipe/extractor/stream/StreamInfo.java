@@ -1,5 +1,7 @@
 package org.schabi.newpipe.extractor.stream;
 
+import static org.schabi.newpipe.extractor.utils.Utils.isNullOrEmpty;
+
 import org.schabi.newpipe.extractor.Info;
 import org.schabi.newpipe.extractor.InfoItem;
 import org.schabi.newpipe.extractor.MetaInfo;
@@ -18,8 +20,6 @@ import java.util.List;
 import java.util.Locale;
 
 import javax.annotation.Nonnull;
-
-import static org.schabi.newpipe.extractor.utils.Utils.isNullOrEmpty;
 
 /*
  * Created by Christian Schabesberger on 26.08.15.

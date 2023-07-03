@@ -2,8 +2,9 @@ package org.schabi.newpipe.extractor.services.youtube.extractors;
 
 import org.schabi.newpipe.extractor.services.youtube.ItagItem;
 
-import javax.annotation.Nonnull;
 import java.io.Serializable;
+
+import javax.annotation.Nonnull;
 
 /**
  * Class to build easier {@link org.schabi.newpipe.extractor.stream.Stream}s for

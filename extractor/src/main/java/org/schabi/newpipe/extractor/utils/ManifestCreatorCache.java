@@ -1,11 +1,12 @@
 package org.schabi.newpipe.extractor.utils;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * A {@link Serializable serializable} cache class used by the extractor to cache manifests

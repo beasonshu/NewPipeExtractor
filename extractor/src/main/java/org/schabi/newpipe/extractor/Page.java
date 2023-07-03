@@ -1,12 +1,12 @@
 package org.schabi.newpipe.extractor;
 
+import static org.schabi.newpipe.extractor.utils.Utils.isNullOrEmpty;
+
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Nullable;
-
-import static org.schabi.newpipe.extractor.utils.Utils.isNullOrEmpty;
 
 public class Page implements Serializable {
     private final String url;

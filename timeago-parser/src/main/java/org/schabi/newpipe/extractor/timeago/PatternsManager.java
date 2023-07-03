@@ -1,8 +1,9 @@
 package org.schabi.newpipe.extractor.timeago;
 
+import java.lang.reflect.InvocationTargetException;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.lang.reflect.InvocationTargetException;
 
 public class PatternsManager {
     /**

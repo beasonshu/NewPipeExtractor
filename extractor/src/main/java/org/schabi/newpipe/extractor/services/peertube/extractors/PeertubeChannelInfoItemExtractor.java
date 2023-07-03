@@ -1,12 +1,14 @@
 package org.schabi.newpipe.extractor.services.peertube.extractors;
 
 import com.grack.nanojson.JsonObject;
+
 import org.schabi.newpipe.extractor.channel.ChannelExtractor;
 import org.schabi.newpipe.extractor.channel.ChannelInfoItemExtractor;
 import org.schabi.newpipe.extractor.exceptions.ParsingException;
 
-import javax.annotation.Nonnull;
 import java.util.Comparator;
+
+import javax.annotation.Nonnull;
 
 public class PeertubeChannelInfoItemExtractor implements ChannelInfoItemExtractor {
 

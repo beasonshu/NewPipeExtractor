@@ -1,12 +1,15 @@
 package org.schabi.newpipe.extractor.services;
 
+import static org.schabi.newpipe.extractor.services.DefaultTests.assertNoMoreItems;
+import static org.schabi.newpipe.extractor.services.DefaultTests.assertOnlyContainsType;
+import static org.schabi.newpipe.extractor.services.DefaultTests.defaultTestMoreItems;
+import static org.schabi.newpipe.extractor.services.DefaultTests.defaultTestRelatedItems;
+
 import org.junit.jupiter.api.Test;
 import org.schabi.newpipe.extractor.InfoItem;
 import org.schabi.newpipe.extractor.ListExtractor;
 
 import javax.annotation.Nullable;
-
-import static org.schabi.newpipe.extractor.services.DefaultTests.*;
 
 public abstract class DefaultListExtractorTest<T extends ListExtractor<? extends InfoItem>> extends DefaultExtractorTest<T>
         implements BaseListExtractorTest {

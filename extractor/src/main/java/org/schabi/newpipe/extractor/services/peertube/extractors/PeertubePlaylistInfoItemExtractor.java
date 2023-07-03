@@ -1,5 +1,7 @@
 package org.schabi.newpipe.extractor.services.peertube.extractors;
 
+import static org.schabi.newpipe.extractor.utils.Utils.isNullOrEmpty;
+
 import com.grack.nanojson.JsonObject;
 
 import org.schabi.newpipe.extractor.exceptions.ParsingException;
@@ -7,8 +9,6 @@ import org.schabi.newpipe.extractor.playlist.PlaylistInfoItemExtractor;
 import org.schabi.newpipe.extractor.stream.Description;
 
 import javax.annotation.Nonnull;
-
-import static org.schabi.newpipe.extractor.utils.Utils.isNullOrEmpty;
 
 public class PeertubePlaylistInfoItemExtractor implements PlaylistInfoItemExtractor  {
 

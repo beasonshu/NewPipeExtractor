@@ -1,11 +1,13 @@
 package org.schabi.newpipe.extractor.services;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.schabi.newpipe.extractor.ExtractorAsserts.assertEmpty;
+import static org.schabi.newpipe.extractor.utils.Utils.isNullOrEmpty;
+
 import org.junit.jupiter.api.Test;
 import org.schabi.newpipe.extractor.MetaInfo;
 import org.schabi.newpipe.extractor.search.SearchExtractor;
-
-
-import javax.annotation.Nullable;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -13,10 +15,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.schabi.newpipe.extractor.ExtractorAsserts.assertEmpty;
-import static org.schabi.newpipe.extractor.utils.Utils.isNullOrEmpty;
+import javax.annotation.Nullable;
 
 public abstract class DefaultSearchExtractorTest extends DefaultListExtractorTest<SearchExtractor>
         implements BaseSearchExtractorTest {
