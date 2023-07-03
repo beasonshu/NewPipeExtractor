@@ -21,6 +21,8 @@ import javax.annotation.Nullable;
 public final class Utils {
     public static final String HTTP = "http://";
     public static final String HTTPS = "https://";
+
+    public static final String EMPTY_STRING = "";
     private static final Pattern M_PATTERN = Pattern.compile("(https?)?://m\\.");
     private static final Pattern WWW_PATTERN = Pattern.compile("(https?)?://www\\.");
 
@@ -307,7 +309,7 @@ public final class Utils {
     }
 
     public static boolean isBlank(final String string) {
-        return string == null || string.isBlank();
+        return string == null || string.length()==0;
     }
 
     @Nonnull
