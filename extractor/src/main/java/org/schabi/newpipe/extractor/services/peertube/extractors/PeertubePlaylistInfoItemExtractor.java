@@ -43,6 +43,11 @@ public class PeertubePlaylistInfoItemExtractor implements PlaylistInfoItemExtrac
     }
 
     @Override
+    public String getBigCoverUrl() throws ParsingException {
+        return null;
+    }
+
+    @Override
     public String getUploaderName() throws ParsingException {
         return uploader.getString("displayName");
     }
