@@ -1,7 +1,5 @@
 package org.schabi.newpipe.extractor.uc9muisc;
 
-import org.schabi.newpipe.extractor.InfoItem;
-
 import java.io.Serializable;
 
 public class U9MusicItem implements Serializable {

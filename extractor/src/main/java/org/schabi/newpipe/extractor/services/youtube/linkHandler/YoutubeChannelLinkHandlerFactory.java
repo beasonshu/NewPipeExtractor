@@ -20,17 +20,18 @@
 
 package org.schabi.newpipe.extractor.services.youtube.linkHandler;
 
+import static org.schabi.newpipe.extractor.utils.Utils.isBlank;
+
 import org.schabi.newpipe.extractor.exceptions.ParsingException;
 import org.schabi.newpipe.extractor.linkhandler.ListLinkHandlerFactory;
 import org.schabi.newpipe.extractor.services.youtube.YoutubeParsingHelper;
 import org.schabi.newpipe.extractor.utils.Utils;
 
-import javax.annotation.Nonnull;
 import java.net.URL;
 import java.util.List;
 import java.util.regex.Pattern;
 
-import static org.schabi.newpipe.extractor.utils.Utils.isBlank;
+import javax.annotation.Nonnull;
 
 public final class YoutubeChannelLinkHandlerFactory extends ListLinkHandlerFactory {
 

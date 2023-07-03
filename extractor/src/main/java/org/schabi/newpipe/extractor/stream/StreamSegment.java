@@ -1,8 +1,9 @@
 package org.schabi.newpipe.extractor.stream;
 
 
-import javax.annotation.Nullable;
 import java.io.Serializable;
+
+import javax.annotation.Nullable;
 
 public class StreamSegment implements Serializable {
     /**

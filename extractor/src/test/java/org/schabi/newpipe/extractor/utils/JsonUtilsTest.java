@@ -1,16 +1,17 @@
 package org.schabi.newpipe.extractor.utils;
 
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import com.grack.nanojson.JsonArray;
 import com.grack.nanojson.JsonObject;
 import com.grack.nanojson.JsonParser;
 import com.grack.nanojson.JsonParserException;
+
 import org.junit.jupiter.api.Test;
 import org.schabi.newpipe.extractor.exceptions.ParsingException;
 
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 public class JsonUtilsTest {

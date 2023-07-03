@@ -1,12 +1,13 @@
 package org.schabi.newpipe.extractor.localization;
 
 
-import javax.annotation.Nonnull;
 import java.io.Serializable;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+
+import javax.annotation.Nonnull;
 
 /**
  * A wrapper class that provides a field to describe if the date/time is precise or just an

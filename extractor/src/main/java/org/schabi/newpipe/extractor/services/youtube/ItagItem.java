@@ -1,14 +1,5 @@
 package org.schabi.newpipe.extractor.services.youtube;
 
-import org.schabi.newpipe.extractor.MediaFormat;
-import org.schabi.newpipe.extractor.exceptions.ParsingException;
-import org.schabi.newpipe.extractor.stream.AudioTrackType;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.io.Serializable;
-import java.util.Locale;
-
 import static org.schabi.newpipe.extractor.MediaFormat.M4A;
 import static org.schabi.newpipe.extractor.MediaFormat.MPEG_4;
 import static org.schabi.newpipe.extractor.MediaFormat.WEBM;
@@ -18,6 +9,16 @@ import static org.schabi.newpipe.extractor.MediaFormat.v3GPP;
 import static org.schabi.newpipe.extractor.services.youtube.ItagItem.ItagType.AUDIO;
 import static org.schabi.newpipe.extractor.services.youtube.ItagItem.ItagType.VIDEO;
 import static org.schabi.newpipe.extractor.services.youtube.ItagItem.ItagType.VIDEO_ONLY;
+
+import org.schabi.newpipe.extractor.MediaFormat;
+import org.schabi.newpipe.extractor.exceptions.ParsingException;
+import org.schabi.newpipe.extractor.stream.AudioTrackType;
+
+import java.io.Serializable;
+import java.util.Locale;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public class ItagItem implements Serializable {
 

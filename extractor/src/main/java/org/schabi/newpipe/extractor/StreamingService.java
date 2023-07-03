@@ -28,9 +28,10 @@ import org.schabi.newpipe.extractor.suggestion.SuggestionExtractor;
 import org.schabi.newpipe.extractor.uc9muisc.U9MusicExtractor;
 import org.schabi.newpipe.extractor.utils.Utils;
 
-import javax.annotation.Nullable;
 import java.util.Collections;
 import java.util.List;
+
+import javax.annotation.Nullable;
 
 /*
  * Copyright (C) 2018 Christian Schabesberger <chris.schabesberger@mailbox.org>
